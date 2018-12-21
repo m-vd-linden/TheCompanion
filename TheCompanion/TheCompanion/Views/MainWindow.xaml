@@ -1,12 +1,51 @@
-﻿<Window x:Class="TheCompanion.MainWindow"
+﻿<Window x:Class="TheCompanion.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TheCompanion"
+        xmlns:local="clr-namespace:TheCompanion.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <TabControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#c6e1ec">
+            <TabItem Header="Home" Background="#c6e1ec">
+                <Grid Background="#c6e1ec">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="33*"/>
+                        <ColumnDefinition Width="33*"/>
+                        <ColumnDefinition Width="33*"/>
+                    </Grid.ColumnDefinitions>
+                    <!--<Image Grid.Column="1" Grid.RowSpan="7" Source="C:\Users\m-vd-\Pictures\lool.png" Stretch="Fill"/> -->
+
+                    <Button Style="{StaticResource RoundedButton}" Grid.Row="1" Grid.Column="0" Content="Ja"/>
+                    <Button Style="{StaticResource RoundedButton}" Grid.Row="3" Grid.Column="0" Content="Ja"/>
+                    <Button Style="{StaticResource RoundedButton}" Grid.Row="5" Grid.Column="0" Content="Ja"/>
+                    <Image Grid.Row="6" Grid.Column="0" Source="C:\Users\m-vd-\Documents\Lightshot\Screenshot_2a.png"/>
+
+                    <Button Style="{StaticResource RoundedButton}" Grid.Row="0" Grid.Column="2" Content="Ja"/>
+                    <Button Style="{StaticResource RoundedButton}" Grid.Row="2" Grid.Column="2" Content="Ja"/>
+                    <Button Style="{StaticResource RoundedButton}" Grid.Row="4" Grid.Column="2" Content="Ja"/>
+                    <Button Style="{StaticResource RoundedButton}" Grid.Row="6" Grid.Column="2" Content="Ja"/>
+
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Stats" Background="#c6e1ec">
+                <Grid Background="#c6e1ec"/>
+            </TabItem>
+            <TabItem Header="Challenges" Background="#c6e1ec">
+                <Grid Background="#c6e1ec"/>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>

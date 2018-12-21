@@ -6,7 +6,27 @@ using System.Threading.Tasks;
 
 namespace TheCompanion.Classes
 {
-    class Module
+    public class Module
     {
+        private string name;
+        private dynamic modula;
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public dynamic Modula
+        {
+            get { return modula; }
+            set { modula = value; }
+        }
+
+        public Module(string name, dynamic module)
+        {
+            Name = name;
+            Modula = module;
+        }
     }
 }
