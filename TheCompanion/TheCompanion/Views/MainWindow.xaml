@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Icon="pack://application:,,,/Resources/Logo.png">
     <Grid Background="#c6e1ec">
-        <TabControl Name="tab_Main" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#c6e1ec">
+        <TabControl Name="tab_Main" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#c6e1ec" SelectionChanged="Tab_Main_SelectionChanged" Margin="0,-24,0,0">
             <TabItem Header="Home" Background="#c6e1ec">
                 <ScrollViewer Background="Transparent" VerticalScrollBarVisibility="Auto">
                     <Grid Name="grid_Robots">
@@ -19,7 +19,7 @@
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="Robot" Background="#c6e1ec">
-                
+                <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="White" Name="stackie"/>
             </TabItem>
             <TabItem Header="Stats" Background="#c6e1ec">
                 <Grid Background="#c6e1ec"/>

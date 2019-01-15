@@ -140,5 +140,30 @@ namespace TheCompanion.Util
             }
             return robots;
         }
+
+        public List<Module> GetAllModulesForRobot(int robotID)
+        {
+            List<Module> modules = new List<Module>();
+            MySqlCommand cmd = new MySqlCommand();
+
+            cmd.CommandText = @"SELECT CONCAT_WS('^', module.Name, module.ScriptLocation) FROM module INNER JOIN robot_module ON module.ID = robot_module.ModuleID WHERE robot_module.RobotID = @id";
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("id", robotID);
+
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                for (int i = 0; i < reader.FieldCount; i++)
+                {
+                    string result = reader[i].ToString();
+                    Module module = new Module(result.Split('^')[0], result.Split('^')[1]);
+
+                    modules.Add(module);
+                }
+            }
+
+            return modules;
+        }
     }
 }

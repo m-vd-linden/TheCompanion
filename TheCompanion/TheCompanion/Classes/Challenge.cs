@@ -6,7 +6,22 @@ using System.Threading.Tasks;
 
 namespace TheCompanion.Classes
 {
-    class Challenge
+    public class Challenge
     {
+        public string Name
+        {
+            get; private set;
+        }
+
+        public int Progress
+        {
+            get; private set;
+        }
+
+        public Challenge(string name, int progress)
+        {
+            Name = name;
+            Progress = progress;
+        }
     }
 }

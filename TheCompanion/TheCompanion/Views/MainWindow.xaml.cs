@@ -22,8 +22,11 @@ namespace TheCompanion.Views
     public partial class MainWindow : Window
     {
         List<Robot> listofRobots;
+        List<Module> listofModules;
+        Robot chosenRobot;
         User mainUser;
         DatabaseHandler dbh = new DatabaseHandler();
+        Module script = new Module("Dance", "HelloModule.dll");
 
         public MainWindow(User user)
         {
@@ -60,6 +63,7 @@ namespace TheCompanion.Views
 
                 img.Source = bitmap;
                 img.MouseUp += chooseRobot_MouseUp;
+                img.Tag = listofRobots[i];
 
                 Label lbl = new Label();
                 lbl.Content = listofRobots[i].Name;
@@ -78,7 +82,61 @@ namespace TheCompanion.Views
 
         private void chooseRobot_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            chosenRobot = (Robot)(((Image)sender).Tag);
             tab_Main.SelectedIndex = 1;
+            //Console.WriteLine(chosenRobot.Name);
+
+            //script.Execute();
+        }
+
+        private void Tab_Main_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (tab_Main.SelectedIndex)
+            {
+                case 0:
+                    break;
+
+                case 1:
+                    LoadModules();
+                    break;
+
+                case 2:
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void LoadModules()
+        {
+            stackie.Children.Clear();
+            dbh.OpenConnection();
+            listofModules = dbh.GetAllModulesForRobot(chosenRobot.ID);
+            dbh.CloseConnection();
+
+            foreach (Module module in listofModules)
+            {
+                Button btn = new Button();
+                btn.Content = listofModules[0].Name;
+                btn.Tag = listofModules[0];
+                btn.Click += moduleButton_Click;
+
+                stackie.Children.Add(btn);
+            }
+        }
+
+        private void moduleButton_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> listofActions;
+            Module module = (Module)(((Button)sender).Tag);
+
+            listofActions = module.Execute();
+
+            foreach (string item in listofActions)
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }
