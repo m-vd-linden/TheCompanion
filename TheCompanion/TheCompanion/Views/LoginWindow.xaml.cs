@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TheCompanion.Classes;
 using TheCompanion.Util;
 using TheCompanion.Views;
 
@@ -22,22 +24,59 @@ namespace TheCompanion
     /// </summary>
     public partial class LoginWindow : Window
     {
+        DatabaseHandler dbh = new DatabaseHandler();
+
         public LoginWindow()
         {
             InitializeComponent();
-
-            DatabaseHandler dbh = new DatabaseHandler();
-            dbh.OpenConnection();
-            dbh.Login();
-            dbh.CloseConnection();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow main = new MainWindow();
-            this.Hide();
-            main.ShowDialog();
-            this.Show();
+            dbh.OpenConnection();
+            Tuple<bool, int, string> tuple = dbh.Login(txtb_Username.Text, CreateHash(pswd_Password.Password));
+
+            if (tuple.Item1)
+            {
+                User user = new User(tuple.Item2, tuple.Item3);
+                dbh.CloseConnection();
+                MainWindow main = new MainWindow(user);
+                this.Hide();
+                main.ShowDialog();
+                this.Show();
+            }
+            else
+            {
+                MessageBox.Show("Inloggegevens zijn incorrect");
+            }
+        }
+
+
+        private string CreateHash(string input)
+        {
+            MD5 md5 = MD5.Create();
+
+            byte[] inputInBytes = System.Text.Encoding.ASCII.GetBytes(input);
+            byte[] hashedInput = md5.ComputeHash(inputInBytes);
+
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < hashedInput.Length; i++)
+            {
+                sb.Append(hashedInput[i].ToString("X2"));
+            }
+            return sb.ToString();
+
+        }
+
+        public void Txtb_Username_GotFocus(object sender, RoutedEventArgs e)
+        {
+            (sender as System.Windows.Controls.TextBox).SelectAll();
+        }
+
+        public void txtb_Password_GotFocus(object sender, RoutedEventArgs e)
+        {
+            (sender as System.Windows.Controls.PasswordBox).SelectAll();
         }
     }
 }

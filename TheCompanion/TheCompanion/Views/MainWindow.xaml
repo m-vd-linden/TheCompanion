@@ -5,40 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TheCompanion.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <TabControl VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#c6e1ec">
+        Title="MainWindow" Height="450" Width="800" Icon="pack://application:,,,/Resources/Logo.png">
+    <Grid Background="#c6e1ec">
+        <TabControl Name="tab_Main" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#c6e1ec">
             <TabItem Header="Home" Background="#c6e1ec">
-                <Grid Background="#c6e1ec">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="33*"/>
-                        <ColumnDefinition Width="33*"/>
-                        <ColumnDefinition Width="33*"/>
-                    </Grid.ColumnDefinitions>
-                    <!--<Image Grid.Column="1" Grid.RowSpan="7" Source="C:\Users\m-vd-\Pictures\lool.png" Stretch="Fill"/> -->
-
-                    <Button Style="{StaticResource RoundedButton}" Grid.Row="1" Grid.Column="0" Content="Ja"/>
-                    <Button Style="{StaticResource RoundedButton}" Grid.Row="3" Grid.Column="0" Content="Ja"/>
-                    <Button Style="{StaticResource RoundedButton}" Grid.Row="5" Grid.Column="0" Content="Ja"/>
-                    <Image Grid.Row="6" Grid.Column="0" Source="C:\Users\m-vd-\Documents\Lightshot\Screenshot_2a.png"/>
-
-                    <Button Style="{StaticResource RoundedButton}" Grid.Row="0" Grid.Column="2" Content="Ja"/>
-                    <Button Style="{StaticResource RoundedButton}" Grid.Row="2" Grid.Column="2" Content="Ja"/>
-                    <Button Style="{StaticResource RoundedButton}" Grid.Row="4" Grid.Column="2" Content="Ja"/>
-                    <Button Style="{StaticResource RoundedButton}" Grid.Row="6" Grid.Column="2" Content="Ja"/>
-
-
-                </Grid>
+                <ScrollViewer Background="Transparent" VerticalScrollBarVisibility="Auto">
+                    <Grid Name="grid_Robots">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Robot" Background="#c6e1ec">
+                
             </TabItem>
             <TabItem Header="Stats" Background="#c6e1ec">
                 <Grid Background="#c6e1ec"/>

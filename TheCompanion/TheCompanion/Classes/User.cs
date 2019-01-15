@@ -6,7 +6,22 @@ using System.Threading.Tasks;
 
 namespace TheCompanion.Classes
 {
-    class User
+    public class User
     {
+        public int UserID
+        {
+            get; private set;
+        }
+
+        public string Name
+        {
+            get; private set;
+        }
+
+        public User(int userID, string name)
+        {
+            UserID = userID;
+            Name = name;
+        }
     }
 }
