@@ -15,7 +15,7 @@ namespace TheCompanion.Util
         public DatabaseHandler()
         {
             conn = new MySqlConnection();
-            conn.ConnectionString = "Server=localhost;Uid=root;Pwd=root;Database=dbi408831;";
+            conn.ConnectionString = "Server=localhost;Uid=root;Pwd=;Database=dbi408831;";
         }
 
         public void OpenConnection()

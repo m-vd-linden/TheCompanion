@@ -10,6 +10,7 @@ namespace TheCompanion.Classes
     public class Module
     {
         private string location;
+        private int skillCounter;
 
         public string Name
         {
@@ -20,6 +21,11 @@ namespace TheCompanion.Classes
         {
             get { return AppDomain.CurrentDomain.BaseDirectory + location; }
             private set { location = value; }
+        }
+
+        public int Skill
+        {
+            get; private set;
         }
 
         public Module(string name, string location)
@@ -37,13 +43,7 @@ namespace TheCompanion.Classes
             foreach (Type t in module.GetExportedTypes())
             {
                 dynamic d = Activator.CreateInstance(t);
-                List<string> tempList = new List<string>();
-                tempList = d.Send();
-
-                foreach (string item in tempList)
-                {
-                    Console.WriteLine(item);
-                }
+                listOfStrings = d.Send();
             }
 
             return listOfStrings;

@@ -8,20 +8,18 @@ using System.Threading;
 
 namespace DanceModule
 {
-    using System.Windows;
-    public class DutchFlag
+    public class DanceModule
     {
-        public async void Send(Window window)
+        public List<string> Send()
         {
-            //Console.WriteLine(a);
+            List<string> listOfCommands = new List<string>();
 
-            window.Background = System.Windows.Media.Brushes.Red;
-            await Task.Delay(1000);
-            window.Background = System.Windows.Media.Brushes.White;
-            await Task.Delay(1000);
-            window.Background = System.Windows.Media.Brushes.Blue;
-            await Task.Delay(1000);
-            window.Background = System.Windows.Media.Brushes.White;
+            listOfCommands.Add("#Move_Left_Arm_Up%");
+            listOfCommands.Add("#Move_Right_Arm_Up%");
+            listOfCommands.Add("#Move_Left_Arm_Down%");
+            listOfCommands.Add("#Move_Right_Arm_Down%");
+
+            return listOfCommands;
         }
     }
 }

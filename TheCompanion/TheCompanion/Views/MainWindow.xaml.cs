@@ -110,19 +110,56 @@ namespace TheCompanion.Views
 
         private void LoadModules()
         {
-            stackie.Children.Clear();
             dbh.OpenConnection();
             listofModules = dbh.GetAllModulesForRobot(chosenRobot.ID);
             dbh.CloseConnection();
 
-            foreach (Module module in listofModules)
+            for (int i = 0; i < listofModules.Count; i++)
+            {
+                RowDefinition rowDefinition = new RowDefinition();
+                rowDefinition.Height = new GridLength(40, GridUnitType.Pixel);
+
+                grid_Modules.RowDefinitions.Add(rowDefinition);
+            }
+
+            RowDefinition rowDefinitionBottom = new RowDefinition();
+            rowDefinitionBottom.Height = new GridLength(100, GridUnitType.Star);
+            grid_Modules.RowDefinitions.Add(rowDefinitionBottom);
+
+            stack_ImgChallengeButton.Height = grid_Modules.Height;
+            Grid.SetRowSpan(stack_ImgChallengeButton, grid_Modules.RowDefinitions.Count);
+
+
+            for (int i = 0; i < listofModules.Count; i+=2)
             {
                 Button btn = new Button();
-                btn.Content = listofModules[0].Name;
-                btn.Tag = listofModules[0];
+                btn.Content = listofModules[i].Name;
+                btn.Tag = listofModules[i];
                 btn.Click += moduleButton_Click;
+                btn.FontSize = 20;
+                btn.VerticalAlignment = VerticalAlignment.Top;
+                btn.Height = 40;
+                btn.Margin = new Thickness(20, 0, 0, 0);
 
-                stackie.Children.Add(btn);
+                Grid.SetRow(btn, i);
+                Grid.SetColumn(btn, 0);
+                grid_Modules.Children.Add(btn);
+
+                if (listofModules.Count - i > 1)
+                {
+                    Button btn2 = new Button();
+                    btn2.Content = listofModules[i + 1].Name;
+                    btn2.Tag = listofModules[i + 1];
+                    btn2.Click += moduleButton_Click;
+                    btn2.FontSize = 20;
+                    btn2.VerticalAlignment = VerticalAlignment.Top;
+                    btn2.Height = 40;
+                    btn2.Margin = new Thickness(0, 0, 30, 0);
+
+                    Grid.SetRow(btn2, i + 1);
+                    Grid.SetColumn(btn2, 2);
+                    grid_Modules.Children.Add(btn2);
+                }
             }
         }
 
@@ -137,6 +174,11 @@ namespace TheCompanion.Views
             {
                 Console.WriteLine(item);
             }
+        }
+
+        private void btn_Challenges_Click(object sender, RoutedEventArgs e)
+        {
+            tab_Main.SelectedIndex = 2;
         }
     }
 }

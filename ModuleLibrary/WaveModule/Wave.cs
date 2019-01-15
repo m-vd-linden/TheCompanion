@@ -7,20 +7,15 @@ using System.Windows;
 
 namespace WaveModule
 {
-    public class GermanFlag
+    public class WaveModule
     {
-        public async void Send(Window window)
+        List<string> listofActions = new List<string>();
+        public List<string> Send()
         {
-            //Console.WriteLine(a);
-
-            window.Background = System.Windows.Media.Brushes.Black;
-            await Task.Delay(1000);
-            window.Background = System.Windows.Media.Brushes.Red;
-            await Task.Delay(1000);
-            window.Background = System.Windows.Media.Brushes.Yellow;
-            await Task.Delay(1000);
-            window.Background = System.Windows.Media.Brushes.White;
-
+            listofActions.Add("#Move_Left_Arm_Up%");
+            listofActions.Add("#Move_Right_Arm_Down%");
+            listofActions.Add("#Smile%");
+            return listofActions;
         }
     }
 }
