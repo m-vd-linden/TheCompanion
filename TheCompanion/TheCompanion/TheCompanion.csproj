@@ -72,10 +72,17 @@
     <Compile Include="Util\MessageBuilder.cs" />
     <Compile Include="Util\SerialHandler.cs" />
     <Compile Include="Util\SerialMessenger.cs" />
+    <Compile Include="Views\AddWindow.xaml.cs">
+      <DependentUpon>AddWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\Styles\RoundedButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -92,7 +99,6 @@
     <Compile Include="Classes\Robot.cs" />
     <Compile Include="Classes\User.cs" />
     <Compile Include="Util\DatabaseHandler.cs" />
-    <Compile Include="Util\ModuleReader.cs" />
     <Compile Include="Views\LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

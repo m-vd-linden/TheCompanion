@@ -10,11 +10,46 @@ namespace WaveModule
     public class WaveModule
     {
         List<string> listofActions = new List<string>();
-        public List<string> Send()
+        public List<string> Send(int skill)
         {
-            listofActions.Add("#Move_Left_Arm_Up%");
-            listofActions.Add("#Move_Right_Arm_Down%");
-            listofActions.Add("#Smile%");
+            switch (skill)
+            {
+                case 1:
+                    listofActions.Add("#DRIVEFORWARD<100>%");
+                    break;
+
+                case 2:
+                    listofActions.Add("#DRIVEFORWARD<200>%");
+                    break;
+
+                case 3:
+                    listofActions.Add("#DRIVEFORWARD<300>%");
+                    break;
+
+                case 4:
+                    listofActions.Add("#DRIVEFORWARD<400>%");
+                    break;
+
+                case 5:
+                    listofActions.Add("#DRIVEFORWARD<500>%");
+                    break;
+
+                case 6:
+                    listofActions.Add("#DRIVEFORWARD<600>%");
+                    break;
+
+                case 7:
+                    listofActions.Add("#DRIVEFORWARD<700>%");
+                    break;
+
+                case 8:
+                    listofActions.Add("#DRIVEFORWARD<800>%");
+                    break;
+
+                case 9:
+                    listofActions.Add("#DRIVEFORWARD<900>%");
+                    break;
+            }
             return listofActions;
         }
     }

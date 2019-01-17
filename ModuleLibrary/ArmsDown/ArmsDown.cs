@@ -3,53 +3,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Threading;
 
-namespace DanceModule
+namespace ArmsDown
 {
-    public class DanceModule
+    public class ArmsDown
     {
+        List<string> listofActions = new List<string>();
         public List<string> Send(int skill)
         {
             switch (skill)
             {
                 case 1:
+                    listofActions.Add("#RPS%");
                     break;
 
                 case 2:
+                    listofActions.Add("#RPS%");
                     break;
 
                 case 3:
+                    listofActions.Add("#RPS%");
                     break;
 
                 case 4:
+                    listofActions.Add("#RPS%");
                     break;
 
                 case 5:
+                    listofActions.Add("#RPS%");
                     break;
 
                 case 6:
+                    listofActions.Add("#RPS%");
                     break;
 
                 case 7:
+                    listofActions.Add("#RPS%");
                     break;
 
                 case 8:
+                    listofActions.Add("#RPS%");
                     break;
 
                 case 9:
+                    listofActions.Add("#RPS%");
                     break;
             }
 
-            List<string> listOfCommands = new List<string>();
-
-            listOfCommands.Add("#Move_Left_Arm_Up%");
-            listOfCommands.Add("#Move_Right_Arm_Up%");
-            listOfCommands.Add("#Move_Left_Arm_Down%");
-            listOfCommands.Add("#Move_Right_Arm_Down%");
-
-            return listOfCommands;
+            return listofActions;
         }
     }
 }

@@ -25,12 +25,21 @@
                         <ColumnDefinition Width="33*"/>
                         <ColumnDefinition Width="33*"/>
                     </Grid.ColumnDefinitions>
-                    <DockPanel Name="stack_ImgChallengeButton" Grid.Column="1" >
-                        <Button Name="btn_Challenges" Content="Challenges" FontSize="20" Height="40" DockPanel.Dock="Top" Click="btn_Challenges_Click"/>
+                    <DockPanel Name="dock_Robot" Grid.Column="1">
+                        <Grid DockPanel.Dock="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Name="btn_AddModule" Content="Add module" FontSize="20" Height="40" Grid.Column="0" Click="Btn_AddModule_Click"/>
+                            <Button Name="btn_Home" Content="Home" FontSize="20" Height="40" Grid.Column="2" Click="Btn_Home_Click"/>
+                            <Button Name="btn_Stats" Content="Challenges" FontSize="20" Height="40" Grid.Column="4" Click="Btn_Stats_Click"/>
+                        </Grid>
                         <Image Name="img_RobotPicture" Source="pack://application:,,,/Resources/Robotje.jpg" VerticalAlignment="Top" HorizontalAlignment="Stretch" DockPanel.Dock="Top" Stretch="Fill"/>
                     </DockPanel>
-                    <!--<StackPanel Name="stack_ImgChallengeButton" Grid.Column="1">
-                    </StackPanel>-->
                 </Grid>
             </TabItem>
             <TabItem Header="Stats" Background="#c6e1ec">

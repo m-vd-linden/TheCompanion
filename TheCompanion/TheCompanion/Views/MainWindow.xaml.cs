@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using TheCompanion.Util;
 using TheCompanion.Classes;
+using System.Windows.Threading;
 
 namespace TheCompanion.Views
 {
@@ -26,16 +28,41 @@ namespace TheCompanion.Views
         Robot chosenRobot;
         User mainUser;
         DatabaseHandler dbh = new DatabaseHandler();
-        Module script = new Module("Dance", "HelloModule.dll");
+        DispatcherTimer timer = new DispatcherTimer();
+        //Module script = new Module("Dance", "HelloModule.dll");
         SerialHandler serial = new SerialHandler();
 
         public MainWindow(User user)
         {
             InitializeComponent();
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+            timer.Start();
+            timer.Tick += Timer_Tick;  
             mainUser = user;
             LoadRobots();
         }
 
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            string[] messages = serial.ReadMessages();
+            if (messages != null)
+            {
+                foreach (string message in messages)
+                {
+                    string result = serial.processReceivedMessage(message);
+
+                    if (result != null)
+                    {
+                        MessageBox.Show(result);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Methode die het inladen van de robots afhandelt
+        /// Per robot wordt er een row aangemaakt met daarin een afbeelding en de naam van de robot
+        /// </summary>
         private void LoadRobots()
         {
             dbh.OpenConnection();
@@ -81,15 +108,22 @@ namespace TheCompanion.Views
             }
         }
 
+        /// <summary>
+        /// Methode die het kiezen van de desbetreffende robot afhandelt
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chooseRobot_MouseUp(object sender, MouseButtonEventArgs e)
         {
             chosenRobot = (Robot)(((Image)sender).Tag);
             tab_Main.SelectedIndex = 1;
-            //Console.WriteLine(chosenRobot.Name);
-
-            //script.Execute();
         }
 
+        /// <summary>
+        /// Methode die het switchen van tabje afhandelt
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Tab_Main_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             switch (tab_Main.SelectedIndex)
@@ -109,11 +143,26 @@ namespace TheCompanion.Views
             }
         }
 
+        /// <summary>
+        /// Methode die het inladen van de modules afvangt
+        /// Eerst worden de modules ingelezen vanuit de database, daarna wordt er per een module een row in de grid aangemaakt
+        /// Daarna worden deze rows om en om gevuld met een button om de module uit te voeren
+        /// </summary>
         private void LoadModules()
         {
+            List<Button> listofDeletableButtons = new List<Button>();
+            grid_Modules.RowDefinitions.Clear();
             dbh.OpenConnection();
             listofModules = dbh.GetAllModulesForRobot(chosenRobot.ID);
             dbh.CloseConnection();
+
+            foreach (Button b in grid_Modules.Children.OfType<Button>())
+            {
+                listofDeletableButtons.Add(b);
+            }
+
+            foreach (Button b in listofDeletableButtons)
+                grid_Modules.Children.Remove(b);
 
             for (int i = 0; i < listofModules.Count; i++)
             {
@@ -126,10 +175,6 @@ namespace TheCompanion.Views
             RowDefinition rowDefinitionBottom = new RowDefinition();
             rowDefinitionBottom.Height = new GridLength(100, GridUnitType.Star);
             grid_Modules.RowDefinitions.Add(rowDefinitionBottom);
-
-            stack_ImgChallengeButton.Height = grid_Modules.Height;
-            Grid.SetRowSpan(stack_ImgChallengeButton, grid_Modules.RowDefinitions.Count);
-
 
             for (int i = 0; i < listofModules.Count; i+=2)
             {
@@ -162,8 +207,16 @@ namespace TheCompanion.Views
                     grid_Modules.Children.Add(btn2);
                 }
             }
+
+            Grid.SetRowSpan(dock_Robot, grid_Modules.RowDefinitions.Count);
+
         }
 
+        /// <summary>
+        /// Methode die het uitvoeren van een module afhandelt
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void moduleButton_Click(object sender, RoutedEventArgs e)
         {
             List<string> listofActions;
@@ -173,16 +226,50 @@ namespace TheCompanion.Views
 
             foreach (string item in listofActions)
             {
-                Console.WriteLine(item);
+                serial.SendMessage(item);
             }
 
-            serial.SendMessage("EEN");
+            module.Upgrade();
+            dbh.OpenConnection();
+            dbh.UpgradeModule(chosenRobot.ID, module.ID, module.Skill);
+            dbh.CloseConnection();
         }
 
-        private void btn_Challenges_Click(object sender, RoutedEventArgs e)
+        private void Btn_Stats_Click(object sender, RoutedEventArgs e)
         {
-            //tab_Main.SelectedIndex = 2;
-            serial.SendMessage("TWEE");
+            tab_Main.SelectedIndex = 2;
+        }
+
+        /// <summary>
+        /// Methode die een nieuwe module kopieert naar de modules map en daarnaast deze in de database toevoegt
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Btn_AddModule_Click(object sender, RoutedEventArgs e)
+        {
+            string moduleName;
+            string fileName;
+            string fileLocation;
+
+            AddWindow addWindow = new AddWindow();
+            addWindow.ShowDialog();
+
+            moduleName = addWindow.ModuleName;
+            fileName = addWindow.ModuleLocation;
+            fileLocation = addWindow.FullModuleLocation;
+
+            File.Copy(fileLocation, AppDomain.CurrentDomain.BaseDirectory + fileName);
+
+            dbh.OpenConnection();
+            dbh.AddModule(moduleName, fileName, chosenRobot.ID);
+            dbh.CloseConnection();
+
+            LoadModules();
+        }
+
+        private void Btn_Home_Click(object sender, RoutedEventArgs e)
+        {
+            tab_Main.SelectedIndex = 0;
         }
     }
 }

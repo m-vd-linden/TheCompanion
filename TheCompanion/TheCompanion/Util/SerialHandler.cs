@@ -14,7 +14,7 @@ namespace TheCompanion.Util
         public SerialHandler()
         {
             messageBuilder = new MessageBuilder('#', '%');
-            serialMessenger = new SerialMessenger("COM3", 115200, messageBuilder);
+            serialMessenger = new SerialMessenger("COM4", 115200, messageBuilder);
 
             serialMessenger.Connect();
         }
@@ -22,6 +22,29 @@ namespace TheCompanion.Util
         public void SendMessage(string message)
         {
             serialMessenger.SendMessage(message);
+        }
+
+        public string[] ReadMessages()
+        {
+            return serialMessenger.ReadMessages();
+        }
+
+        public string processReceivedMessage(string message)
+        {
+            if (message == "Scissor")
+            {
+                return "De robot kiest voor schaar";
+            }
+            else if (message == "Paper")
+            {
+                return "De robot kiest voor papier";
+            }
+            else if (message == "Rock")
+            {
+                return "De robot kiest voor steen";
+            }
+
+            return null;
         }
     }
 }
