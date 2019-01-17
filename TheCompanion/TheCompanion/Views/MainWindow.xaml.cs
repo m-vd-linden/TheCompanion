@@ -27,6 +27,7 @@ namespace TheCompanion.Views
         User mainUser;
         DatabaseHandler dbh = new DatabaseHandler();
         Module script = new Module("Dance", "HelloModule.dll");
+        SerialHandler serial = new SerialHandler();
 
         public MainWindow(User user)
         {
@@ -139,7 +140,7 @@ namespace TheCompanion.Views
                 btn.FontSize = 20;
                 btn.VerticalAlignment = VerticalAlignment.Top;
                 btn.Height = 40;
-                btn.Margin = new Thickness(20, 0, 0, 0);
+                btn.Margin = new Thickness(20, 0, 30, 0);
 
                 Grid.SetRow(btn, i);
                 Grid.SetColumn(btn, 0);
@@ -154,7 +155,7 @@ namespace TheCompanion.Views
                     btn2.FontSize = 20;
                     btn2.VerticalAlignment = VerticalAlignment.Top;
                     btn2.Height = 40;
-                    btn2.Margin = new Thickness(0, 0, 30, 0);
+                    btn2.Margin = new Thickness(20, 0, 30, 0);
 
                     Grid.SetRow(btn2, i + 1);
                     Grid.SetColumn(btn2, 2);
@@ -174,11 +175,14 @@ namespace TheCompanion.Views
             {
                 Console.WriteLine(item);
             }
+
+            serial.SendMessage("EEN");
         }
 
         private void btn_Challenges_Click(object sender, RoutedEventArgs e)
         {
-            tab_Main.SelectedIndex = 2;
+            //tab_Main.SelectedIndex = 2;
+            serial.SendMessage("TWEE");
         }
     }
 }

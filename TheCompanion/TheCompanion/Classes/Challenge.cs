@@ -18,6 +18,11 @@ namespace TheCompanion.Classes
             get; private set;
         }
 
+        public int Finish
+        {
+            get; private set;
+        }
+
         public Challenge(string name, int progress)
         {
             Name = name;
