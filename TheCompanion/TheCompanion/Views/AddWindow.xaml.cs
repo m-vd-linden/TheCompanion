@@ -41,11 +41,11 @@ namespace TheCompanion.Views
             InitializeComponent();
         }
 
-        private void Txtb_ModuleLocation_GotFocus(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// Method for handling the add module button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Btn_AddModule_Click(object sender, RoutedEventArgs e)
         {
             if (txtb_ModuleName.Text != "" && txtb_ModuleLocation.Text != "")
@@ -56,6 +56,12 @@ namespace TheCompanion.Views
             }
         }
 
+        /// <summary>
+        /// Method for handling the browse module click event
+        /// Opening a file dialog where the user can select a new module
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Btn_BrowseModule_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();

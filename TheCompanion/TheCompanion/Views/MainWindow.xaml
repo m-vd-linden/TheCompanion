@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TheCompanion.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Icon="pack://application:,,,/Resources/Logo.png">
+        Title="MainWindow" Height="450" Width="800" WindowState="Maximized" Icon="pack://application:,,,/Resources/Logo.png">
     <Grid Background="#c6e1ec">
-        <TabControl Name="tab_Main" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#c6e1ec" SelectionChanged="Tab_Main_SelectionChanged" Margin="0,-24,0,0">
-            <TabItem Header="Home" Background="#c6e1ec">
+        <TabControl Name="tab_Main" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="#c6e1ec" SelectionChanged="Tab_Main_SelectionChanged">
+            <TabItem Header="Home" Background="#c6e1ec" IsEnabled="false">
                 <ScrollViewer Background="Transparent" VerticalScrollBarVisibility="Auto">
                     <Grid Name="grid_Robots">
                         <Grid.ColumnDefinitions>
@@ -36,18 +36,24 @@
                             </Grid.ColumnDefinitions>
                             <Button Name="btn_AddModule" Content="Add module" FontSize="20" Height="40" Grid.Column="0" Click="Btn_AddModule_Click"/>
                             <Button Name="btn_Home" Content="Home" FontSize="20" Height="40" Grid.Column="2" Click="Btn_Home_Click"/>
-                            <Button Name="btn_Stats" Content="Challenges" FontSize="20" Height="40" Grid.Column="4" Click="Btn_Stats_Click"/>
+                            <Button Name="btn_Stats" Content="Stats" FontSize="20" Height="40" Grid.Column="4" Click="Btn_Stats_Click"/>
                         </Grid>
                         <Image Name="img_RobotPicture" Source="pack://application:,,,/Resources/Robotje.jpg" VerticalAlignment="Top" HorizontalAlignment="Stretch" DockPanel.Dock="Top" Stretch="Fill"/>
                     </DockPanel>
                 </Grid>
             </TabItem>
-            <TabItem Header="Stats" Background="#c6e1ec">
-                <Grid Background="#c6e1ec"/>
+            <TabItem Header="Stats" Background="#c6e1ec" IsEnabled="false">
+                <Grid Name="grid_Stats" Background="#c6e1ec">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                </Grid>
             </TabItem>
-            <TabItem Header="Challenges" Background="#c6e1ec">
+            <!--<TabItem Header="Challenges" Background="#c6e1ec">
                 <Grid Background="#c6e1ec"/>
-            </TabItem>
+            </TabItem>-->
         </TabControl>
     </Grid>
 </Window>

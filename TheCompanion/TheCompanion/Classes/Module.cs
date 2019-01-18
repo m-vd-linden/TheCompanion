@@ -10,7 +10,6 @@ namespace TheCompanion.Classes
     public class Module
     {
         private string location;
-        private int skillCounter;
 
         public int ID
         {
@@ -41,6 +40,14 @@ namespace TheCompanion.Classes
             ID = id;
         }
 
+        /// <summary>
+        /// Method which handles the reading of the module
+        /// As assembly, the given DLL file is loaded in
+        /// Foreach class type in that module, retrieve all the methods
+        /// Then, make a dynamic instanec of those classes
+        /// In the end, execute the send method(which requires skill level) and put the result in a list of strings
+        /// </summary>
+        /// <returns></returns>
         public List<string> Execute()
         {
             List<string> listOfStrings = new List<string>();
@@ -52,10 +59,12 @@ namespace TheCompanion.Classes
                 dynamic d = Activator.CreateInstance(t);
                 listOfStrings = d.Send(Skill);
             }
-
             return listOfStrings;
         }
 
+        /// <summary>
+        /// Method for upgrading the skill level of a module
+        /// </summary>
         public void Upgrade()
         {
             if (Skill != 9)

@@ -4,10 +4,5 @@
              xmlns:local="clr-namespace:TheCompanion"
              StartupUri="/Views/LoginWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles/RoundedButton.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
     </Application.Resources>
 </Application>

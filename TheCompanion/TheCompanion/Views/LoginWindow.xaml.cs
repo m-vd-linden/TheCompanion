@@ -31,6 +31,12 @@ namespace TheCompanion
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Method for handling the login click event
+        /// If a username and password exists in the database the user will be logged in
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             dbh.OpenConnection();
@@ -51,7 +57,11 @@ namespace TheCompanion
             }
         }
 
-
+        /// <summary>
+        /// Method for hashing the MD5 hashing the password of a user
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         private string CreateHash(string input)
         {
             MD5 md5 = MD5.Create();

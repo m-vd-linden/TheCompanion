@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,19 +16,33 @@ namespace TheCompanion.Util
         public DatabaseHandler()
         {
             conn = new MySqlConnection();
-            conn.ConnectionString = "Server=localhost;Uid=root;Pwd=root;Database=dbi408831;";
+            conn.ConnectionString = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "Connectionstring.txt");
         }
 
+        /// <summary>
+        /// Method for opening the connection with the database
+        /// </summary>
         public void OpenConnection()
         {
             conn.Open();
         }
 
+        /// <summary>
+        /// Method for closing the connection with the database
+        /// </summary>
         public void CloseConnection()
         {
             conn.Close();
         }
 
+        /// <summary>
+        /// Method for checking if the users login credentials are in the database
+        /// If they are, also get the userID and name of the user
+        /// In the end, put it in a tuple, which is a list of different datatypes
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public Tuple<bool, int, string> Login(string username, string password)
         {
             bool result;
@@ -67,6 +82,12 @@ namespace TheCompanion.Util
             return tuple;
         }
 
+        /// <summary>
+        /// Method for getting the UserID by username and password
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public int GetUserID(string username, string password)
         {
             int userID;
@@ -77,11 +98,23 @@ namespace TheCompanion.Util
             cmd.Parameters.AddWithValue("username", username);
             cmd.Parameters.AddWithValue("password", password);
 
-            userID = (int)cmd.ExecuteScalar();
+            try
+            {
+                userID = (int)cmd.ExecuteScalar();
+            }
+            catch(Exception e)
+            {
+                userID = 0;
+            }
 
             return userID;
         }
 
+        /// <summary>
+        /// Method for getting the name of a user by userID
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
         public string GetUserName(int userID)
         {
             string userName;
@@ -91,11 +124,23 @@ namespace TheCompanion.Util
             cmd.Connection = conn;
             cmd.Parameters.AddWithValue("id", userID);
 
-            userName = cmd.ExecuteScalar().ToString();
+            try
+            {
+                userName = cmd.ExecuteScalar().ToString();
+            }
+            catch(Exception e)
+            {
+                userName = "";
+            }
 
             return userName;
         }
 
+        /// <summary>
+        /// Method for getting the number of robots of a user
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
         public int GetNumOfRobots(string userID)
         {
             int result;
@@ -117,6 +162,11 @@ namespace TheCompanion.Util
             return result;
         }
 
+        /// <summary>
+        /// Method for getting all robots per userID
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
         public List<Robot> GetAllRobotsPerUser(int userID)
         {
             List<Robot> robots = new List<Robot>();
@@ -126,21 +176,34 @@ namespace TheCompanion.Util
             cmd.Connection = conn;
             cmd.Parameters.AddWithValue("id", userID);
 
-            MySqlDataReader reader = cmd.ExecuteReader();
-
-            while (reader.Read())
+            try
             {
-                for (int i = 0; i < reader.FieldCount; i++)
-                {
-                    string result = reader[i].ToString();
-                    Robot robot = new Robot(Convert.ToInt32(result.Split('^')[0]), result.Split('^')[1]);
+                MySqlDataReader reader = cmd.ExecuteReader();
 
-                    robots.Add(robot);
+                while (reader.Read())
+                {
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        string result = reader[i].ToString();
+                        Robot robot = new Robot(Convert.ToInt32(result.Split('^')[0]), result.Split('^')[1]);
+
+                        robots.Add(robot);
+                    }
                 }
             }
+            catch(Exception e)
+            {
+                robots.Clear();
+            }
+
             return robots;
         }
 
+        /// <summary>
+        /// Method for getting all modulds per robot
+        /// </summary>
+        /// <param name="robotID"></param>
+        /// <returns></returns>
         public List<Module> GetAllModulesForRobot(int robotID)
         {
             List<Module> modules = new List<Module>();
@@ -150,22 +213,37 @@ namespace TheCompanion.Util
             cmd.Connection = conn;
             cmd.Parameters.AddWithValue("id", robotID);
 
-            MySqlDataReader reader = cmd.ExecuteReader();
-
-            while (reader.Read())
+            try
             {
-                for (int i = 0; i < reader.FieldCount; i++)
-                {
-                    string result = reader[i].ToString();
-                    Module module = new Module(result.Split('^')[0], result.Split('^')[1], Convert.ToInt32(result.Split('^')[2]), Convert.ToInt32(result.Split('^')[3]));
+                MySqlDataReader reader = cmd.ExecuteReader();
 
-                    modules.Add(module);
+                while (reader.Read())
+                {
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        string result = reader[i].ToString();
+                        Module module = new Module(result.Split('^')[0], result.Split('^')[1], Convert.ToInt32(result.Split('^')[2]), Convert.ToInt32(result.Split('^')[3]));
+
+                        modules.Add(module);
+                    }
                 }
             }
+            catch(Exception e)
+            {
+                modules.Clear();
+            }
+
 
             return modules;
         }
 
+        /// <summary>
+        /// method for upgrading the skill level of a module
+        /// </summary>
+        /// <param name="robotID"></param>
+        /// <param name="moduleID"></param>
+        /// <param name="skillLvl"></param>
+        /// <returns></returns>
         public bool UpgradeModule(int robotID, int moduleID, int skillLvl)
         {
             bool result;
@@ -191,6 +269,13 @@ namespace TheCompanion.Util
             return result;
         }
 
+        /// <summary>
+        /// Method for adding a new module to the database
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="scriptLocation"></param>
+        /// <param name="robotID"></param>
+        /// <returns></returns>
         public bool AddModule(string name, string scriptLocation, int robotID)
         {
             bool result;
@@ -217,6 +302,11 @@ namespace TheCompanion.Util
             return result;
         }
 
+        /// <summary>
+        /// module for linking a module to a robot
+        /// </summary>
+        /// <param name="robotID"></param>
+        /// <param name="moduleID"></param>
         public void LinkModuleToRobot(int robotID, int moduleID)
         {
             MySqlCommand cmd = new MySqlCommand();
@@ -227,7 +317,14 @@ namespace TheCompanion.Util
             cmd.Parameters.AddWithValue("robotID", robotID);
             cmd.Parameters.AddWithValue("moduleID", moduleID);
 
-            cmd.ExecuteNonQuery();
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch(Exception e)
+            {
+
+            }
         }
     }
 }

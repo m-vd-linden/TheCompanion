@@ -53,7 +53,7 @@ CREATE TABLE `module` (
   `Name` varchar(255) NOT NULL,
   `ScriptLocation` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,7 +62,7 @@ CREATE TABLE `module` (
 
 LOCK TABLES `module` WRITE;
 /*!40000 ALTER TABLE `module` DISABLE KEYS */;
-INSERT INTO `module` VALUES (1,'Zeg Hallo','HelloModule.dll');
+INSERT INTO `module` VALUES (1,'Zeg Hallo','HelloModule.dll'),(2,'Zwaai','WaveModule.dll'),(3,'Doe een dansje','DanceModule.dll'),(4,'TestModule','MySql.Data.dll'),(5,'TestModule','Google.Protobuf.dll'),(6,'Thanos car Testmodule','sbscmp10.dll'),(7,'Test2','xwreg.dll'),(8,'thanos','thanos.dll'),(9,'Test3','Windows.Cortana.PAL.Desktop.dll'),(10,'Thanos car 2','WpnUserService.dll'),(11,'dll add test','igfxDI.dll'),(12,'Dll Add Thanos car','FaxPrinterInstaller.dll'),(13,'Steen, papier, schaar','ArmsUp.dll'),(14,'AddTest1','ArmsDown.dll'),(15,'AddTest2','ArmsDown - kopie.dll'),(16,'AddTest3','ArmsDown - kopie - kopie - kopie (3).dll'),(17,'AddTest4','ArmsDown - kopie (4) - kopie - kopie.dll'),(18,'AddTest5','ArmsDown - kopie - kopie.dll'),(19,'AddTest6','ArmsDown - kopie (7) - kopie.dll'),(20,'AddTest7','ArmsDown - kopie (3) - kopie.dll'),(21,'Rij een stukkie vooruit','LekkerRijden.dll'),(22,'Sprint als een gek','Sprint.dll');
 /*!40000 ALTER TABLE `module` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -135,7 +135,7 @@ CREATE TABLE `robot_module` (
   KEY `ModuleID` (`ModuleID`),
   CONSTRAINT `robot_module_ibfk_1` FOREIGN KEY (`RobotID`) REFERENCES `robot` (`id`),
   CONSTRAINT `robot_module_ibfk_2` FOREIGN KEY (`ModuleID`) REFERENCES `module` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -144,7 +144,7 @@ CREATE TABLE `robot_module` (
 
 LOCK TABLES `robot_module` WRITE;
 /*!40000 ALTER TABLE `robot_module` DISABLE KEYS */;
-INSERT INTO `robot_module` VALUES (1,1,1,1);
+INSERT INTO `robot_module` VALUES (1,1,1,1),(2,1,2,1),(3,1,3,1),(4,1,1,1),(5,1,10,1),(6,1,11,1),(7,1,12,1),(8,1,13,7),(9,1,14,1),(10,1,15,1),(11,1,16,1),(12,1,17,1),(13,1,18,1),(14,1,19,1),(15,1,20,1),(16,1,21,1),(17,1,22,1);
 /*!40000 ALTER TABLE `robot_module` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -212,4 +212,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-15 19:50:51
+-- Dump completed on 2019-01-18  8:10:38

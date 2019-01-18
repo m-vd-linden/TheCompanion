@@ -19,16 +19,29 @@ namespace TheCompanion.Util
             serialMessenger.Connect();
         }
 
+        /// <summary>
+        /// Method for sending a message to the serial messenger
+        /// </summary>
+        /// <param name="message"></param>
         public void SendMessage(string message)
         {
             serialMessenger.SendMessage(message);
         }
 
+        /// <summary>
+        /// method for reading the incoming messages
+        /// </summary>
+        /// <returns></returns>
         public string[] ReadMessages()
         {
             return serialMessenger.ReadMessages();
         }
 
+        /// <summary>
+        /// method for handling the incoming messages
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public string processReceivedMessage(string message)
         {
             if (message == "Scissor")

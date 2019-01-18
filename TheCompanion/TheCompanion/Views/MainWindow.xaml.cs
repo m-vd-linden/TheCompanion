@@ -29,19 +29,24 @@ namespace TheCompanion.Views
         User mainUser;
         DatabaseHandler dbh = new DatabaseHandler();
         DispatcherTimer timer = new DispatcherTimer();
-        //Module script = new Module("Dance", "HelloModule.dll");
         SerialHandler serial = new SerialHandler();
 
         public MainWindow(User user)
         {
             InitializeComponent();
-            timer.Interval = new TimeSpan(0, 0, 0, 0, 10);
-            timer.Start();
-            timer.Tick += Timer_Tick;  
+            //timer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+            //timer.Start();
+            //timer.Tick += Timer_Tick;  
             mainUser = user;
             LoadRobots();
         }
 
+        /// <summary>
+        /// Method for handling the timer tick
+        /// Every tick will be checked if there are new messages send to the pc via serial communication
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Timer_Tick(object sender, EventArgs e)
         {
             string[] messages = serial.ReadMessages();
@@ -136,10 +141,66 @@ namespace TheCompanion.Views
                     break;
 
                 case 2:
+                    LoadStats();
                     break;
 
                 default:
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Method for loading in the stats of all modules
+        /// </summary>
+        private void LoadStats()
+        {
+            grid_Stats.RowDefinitions.Clear();
+
+            RowDefinition row = new RowDefinition();
+            row.Height = new GridLength(40, GridUnitType.Pixel);
+
+            grid_Stats.RowDefinitions.Add(row);
+
+            Label lbl_Title = new Label();
+            lbl_Title.FontSize = 20;
+            lbl_Title.Content = "Skill van een module (1/9)";
+
+            Grid.SetRow(lbl_Title, 0);
+            Grid.SetColumn(lbl_Title, 0);
+            Grid.SetColumnSpan(lbl_Title, 3);
+
+            grid_Stats.Children.Add(lbl_Title);
+
+            for (int i = 0; i < listofModules.Count; i++)
+            {
+                RowDefinition rowDefinition = new RowDefinition();
+                rowDefinition.Height = new GridLength(40, GridUnitType.Pixel);
+
+                grid_Stats.RowDefinitions.Add(rowDefinition);
+            }
+
+            RowDefinition rowDefinitionBottom = new RowDefinition();
+            rowDefinitionBottom.Height = new GridLength(100, GridUnitType.Star);
+            grid_Stats.RowDefinitions.Add(rowDefinitionBottom);
+
+            for (int i = 0; i < listofModules.Count; i++)
+            {
+                Label lbl = new Label();
+                lbl.Content = listofModules[i].Name;
+
+                ProgressBar progressBar = new ProgressBar();
+                progressBar.Minimum = 0;
+                progressBar.Maximum = 9;
+                progressBar.Value = listofModules[i].Skill;
+                progressBar.Width = 120;
+
+                Grid.SetRow(lbl, i + 1);
+                Grid.SetRow(progressBar, i + 1);
+                Grid.SetColumn(lbl, 0);
+                Grid.SetColumn(progressBar, 1);
+
+                grid_Stats.Children.Add(lbl);
+                grid_Stats.Children.Add(progressBar);
             }
         }
 
@@ -267,6 +328,11 @@ namespace TheCompanion.Views
             LoadModules();
         }
 
+        /// <summary>
+        /// Method for handling the home button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Btn_Home_Click(object sender, RoutedEventArgs e)
         {
             tab_Main.SelectedIndex = 0;
