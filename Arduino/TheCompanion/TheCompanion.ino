@@ -54,51 +54,51 @@ int rpsCounter;
 
 bool driveForward = false;
 long timeOne;
-int timeUntillOne;
+int timeUntilOne;
 
 bool driveBackward = false;
 long timeTwo;
-int timeUntillTwo;
+int timeUntilTwo;
 
 bool driveRight = false;
 long timeThree;
-int timeUntillThree;
+int timeUntilThree;
 
 bool driveLeft = false;
 long timeFour;
-int timeUntillFour;
+int timeUntilFour;
 
 bool rightArmForward = false;
 long timeFive;
-int timeUntillFive;
+int timeUntilFive;
 
 bool rightArmBackward = false;
 long timeSix;
-int timeUntillSix;
+int timeUntilSix;
 
 bool leftArmForward = false;
 long timeSeven;
-int timeUntillSeven;
+int timeUntilSeven;
 
 bool leftArmBackward = false;
 long timeEight;
-int timeUntillEight;
+int timeUntilEight;
 
 bool rightHandForward = false;
 long timeNine;
-int timeUntillNine;
+int timeUntilNine;
 
 bool rightHandBackward = false;
 long timeTen;
-int timeUntillTen;
+int timeUntilTen;
 
 bool leftHandForward = false;
 long timeEleven;
-int timeUntillEleven;
+int timeUntilEleven;
 
 bool leftHandBackward = false;
 long timeTwelve;
-int timeUntillTwelve;
+int timeUntilTwelve;
 
 void setup() {
   // put your setup code here, to run once:
@@ -129,62 +129,62 @@ void loop() {
   {
     RockPaperScissor();
   }
-  if(driveForward && millis() - timeOne > timeUntillOne)
+  if(driveForward && millis() - timeOne > timeUntilOne)
   {
     driveForward = false;
     MDriveForwardOff();
   }
-  if(driveBackward && millis() - timeTwo > timeUntillTwo)
+  if(driveBackward && millis() - timeTwo > timeUntilTwo)
   {
     driveBackward = false;
     MDriveBackwardOff();
   }
-  if(driveRight && millis() - timeThree > timeUntillThree)
+  if(driveRight && millis() - timeThree > timeUntilThree)
   {
     driveRight = false;
     MDriveRightOff();
   }
-  if(driveLeft && millis() - timeFour > timeUntillFour)
+  if(driveLeft && millis() - timeFour > timeUntilFour)
   {
     driveLeft = false;
     MDriveLeftOff();
   }
-  if(rightArmForward && millis() - timeFive > timeUntillFive)
+  if(rightArmForward && millis() - timeFive > timeUntilFive)
   {
     rightArmForward = false;
     MRightArmForwardOff();
   }
-  if(rightArmBackward && millis() - timeSix > timeUntillSix)
+  if(rightArmBackward && millis() - timeSix > timeUntilSix)
   {
     rightArmBackward = false;
     MRightArmBackwardOff();
   }
-  if(leftArmForward && millis() - timeSeven > timeUntillSeven)
+  if(leftArmForward && millis() - timeSeven > timeUntilSeven)
   {
     leftArmForward = false;
     MLeftArmForwardOff();
   }
-  if(leftArmBackward && millis() - timeEight > timeUntillEight)
+  if(leftArmBackward && millis() - timeEight > timeUntilEight)
   {
     leftArmBackward = false;
     MLeftArmBackwardOff();
   }
-  if(rightHandForward && millis() - timeNine > timeUntillNine)
+  if(rightHandForward && millis() - timeNine > timeUntilNine)
   {
     rightHandForward = false;
     MRightHandForwardOff();
   }
-  if(rightHandBackward && millis() - timeTen > timeUntillTen)
+  if(rightHandBackward && millis() - timeTen > timeUntilTen)
   {
     rightHandBackward = false;
     MRightHandBackwardOff();
   }
-  if(leftHandForward && millis() - timeEleven > timeUntillEleven)
+  if(leftHandForward && millis() - timeEleven > timeUntilEleven)
   {
     leftHandForward = false;
     MLeftHandForwardOff();
   }
-  if(leftHandBackward && millis() - timeOne > timeUntillOne)
+  if(leftHandBackward && millis() - timeOne > timeUntilOne)
   {
     leftHandBackward = false;
     MLeftHandBackwardOff();
